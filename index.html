@@ -13,52 +13,34 @@
         <header>
             <div class="logo">E-shop</div>
             <div class="cart">
-                <form action="#" class="search-form" @submit.prevent="filter">
-                    <input type="text" class="search-field" v-model="userSearch">
+                <filter-search></filter-search>
+                <!-- форма для фильтра -->
+                <!-- @submit.prevent="filter"конструкция выполянет тоже самое что выполняет e.preventDefaul то есть страница  не будет перезагружаться-->
+                <!-- <form action="#" class="search-form" @submit.prevent="$parent.filter">
+                    v-model то что мы введем в инпуте моментально будет доступно в userSearch в js
+                    <input type="text" class="search-field" v-model="$parent.userSearch">
                     <button class="btn-search" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
-                </form>
+                </form> -->
                 <button class="btn-cart" type="button" @click="showCart = !showCart">Корзина</button>
-                <div class="cart-block " v-show="showCart">
-                    <div class="cart-item" v-for="item of cartItems" :key="item.id_product">
-                        <div class="cart-item__box">
-                            <img :src="imgCatalog" class="cart-item__img" :alt="item.product_name">
-                            <div class="cart-item__desc">
-                                <div class="cart-item__title"> {{ item.product_name}} </div>
-                                <div class="cart-item__quantity">Quantity: {{ item.quantity }}</div>
-                                <div class="cart-item-single__price"> {{ item.price}} $</div>
-                            </div>
-                        </div>
-                        <div class="cart-item__block">
-                            <button class="cart-item__remove btn-remove" @click="removeFromCart(item)">&times;</button>
-                            <div class="cart-item__price">
-                                {{ item.quantity * item.price }} $
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <cart :cart-items="cartItems" :img="imgCart" :visibility="showCart" @remove="remove">
+                </cart>
             </div>
         </header>
         <main>
-            <div class="products">
-                <div class="product-item" v-for="product of filtered" :key="product.id_product">
-                    <!--  key для быстроты перебора-->
-                    <img :src="imgCatalog" alt="img">
-                    <div class="desc">
-                        <h3> {{product.product_name}} </h3>
-                        <p> {{product.price}} </p>
-                        <button class="buy-btn" @click="addProduct(product)">Купить</button>
-                    </div>
-                </div>
-            </div>
+            <products :products="filtered" :img="imgProduct" @add-product="addProduct"></products>
         </main>
+
     </div>
 
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/filterComponents.js"></script>
+    <script src="js/cartComponent.js"></script>
+    <script src="js/ProductComponent.js"></script>
     <script src="js/main.js"></script>
 </body>
 
